@@ -5,7 +5,7 @@ public class Main {
 
     for (int i = 1; i <= rows; ++i) {
       for (int k = 1; k <= i; ++k) {
-        System.out.print("* ");
+        System.out.print("$ ");
       }
       System.out.println();
     }
