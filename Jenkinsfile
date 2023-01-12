@@ -1,28 +1,24 @@
 pipeline { 
-  
-   agent any
-
-   stages {
-   
-     stage('Install Dependencies') { 
-        steps { 
-           echo 'npm install' 
+    agent any 
+    options {
+        skipStagesAfterUnstable()
+    }
+    stages {
+        stage('Build') { 
+            steps { 
+                sh 'make' 
+            }
         }
-     }
-     
-     stage('Test') { 
-        steps { 
-           echo 'testing application...'
+        stage('Test'){
+            steps {
+                sh 'make check'
+                junit 'reports/**/*.xml' 
+            }
         }
-      }
-
-         stage("Deploy application") { 
-         steps { 
-           echo 'deploying application...'
-         }
-
-     }
-  
-   	}
-
-   }
+        stage('Deploy') {
+            steps {
+                sh 'make publish'
+            }
+        }
+    }
+}
